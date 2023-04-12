@@ -1,0 +1,61 @@
+<%- include("farmer_header.ejs")%>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Pre-cultivation support</h1>
+                   <h2>Welcome, <%=locals.name %></h2>
+                   <h3>Based on your location and our analysis, we present you the following list of crops.</h3>
+                   <p>Please select the one you wish know about and proceed.</p>
+                    <table class="table" id="crops">
+                        <thead>
+                          <tr>
+                            <th>Crop name</th>
+                            <th>Action</th>
+                        
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                      </table>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            <script>
+              $(document).ready(function(){
+
+                $.ajax({
+    'url': "/get_crops",
+    'method': "GET",
+    'contentType': 'application/json'
+}).done( function(data) {
+    
+      $('#crops').DataTable({
+                   
+                   paging: true,
+                   "autoWidth": true,
+           "searching":true,
+           "aaData": data,
+                   "columns":[
+                       {
+                           "data":"commodity"
+                       },
+    
+                       {
+                           "data":"commodity",
+                           render:(data)=>{return '<form  target="_blank"  name="vd" method="post" action="/viewcropinfo"><input type="hidden" name="cropname" value="'+data+'"/> <button type="submit" class="btn btn-primary" target="_blank">View details</button></form> '}
+                       }
+                   ]
+                  
+              
+                });
+    })
+})
+              
+         
+              </script>
+            <%- include("farmer_footer.ejs")%>

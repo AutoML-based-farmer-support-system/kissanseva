@@ -1,0 +1,97 @@
+<%- include("company_header.ejs")%>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-gray-800">Company Manager</h1>
+
+        <h3>Use respective module below.</h3>
+        <br>
+        <form   name="vd" method="post" action="/reserve">
+        <table class="table" id="crops">
+            <thead>
+                <tr>
+
+                    <th>Order Id</th>
+                    <th>Address</th>
+                    <th>Commodity</th>
+                    <th>Quantity(TON/s)</th>
+                    <th>Finalprice</th>
+                    <th>Status</th>
+                    <th>Reserved by</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </form>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                'url': "/acporders",
+                'method': "GET",
+                'contentType': 'application/json'
+            }).done(function (data) {
+
+                $('#crops').DataTable({
+
+                    paging: true,
+                    "autoWidth": true,
+                    "searching": true,
+                    "aaData": data,
+                    "columns": [
+                        {
+                            "data": "orderid",
+                            render:(data)=>{
+                                return data+'<input type="hidden" name="oid" value="' + data + '"/>'
+                            }
+                        },
+                        {
+                            "data": "address"
+                        },
+                        {
+                            "data": "commodity"
+                        },
+                        {
+                            "data": "quantity"
+                        },
+
+                        {
+                            "data": "finalprice",
+                            render: (data) => {
+                                return '<input type="number" name="finalprice" value="' + data + '"/>INR'
+                            }
+                        },
+                        {
+                            "data": "status",
+                            render:(data)=>{
+                                if(data=='NA')
+                                return '<select name="status"><option value="Confirmed with the farmer">Confirmed with the farmer</option><option value="Pickup arranged">Pickup arranged</option><option value="Pikup done">Pickup done</option><option value="Order cancelled">Order Cancelled</option><option value="Sale completed">Sale Completed</option></select> '
+                                else
+                                return 'Current status:\n\t'+data+'\nChange:\n'+'<select name="status"><option value="Confirmed with the farmer">Confirmed with the farmer</option><option value="Pickup arranged">Pickup arranged</option><option value="Pikup done">Pickup done</option><option value="Order cancelled">Order Cancelled</option><option value="Sale completed">Sale Completed</option></select> '
+                            }
+                        },
+                        {
+                            "data": "reservedby",
+                            render: (data) => { 
+                                if(data=='NA')
+                                return  '  <button type="submit" class="btn btn-primary" >Reserve sale</button> ' 
+                                else
+                                return data+'<button type="submit" class="btn btn-primary" >Update</button>'
+                            }
+                        }
+                    ]
+
+
+                });
+            })
+        })
+
+
+    </script>
+    <%- include("company_footer.ejs")%>

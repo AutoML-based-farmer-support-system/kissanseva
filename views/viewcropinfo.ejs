@@ -1,0 +1,201 @@
+<%- include("farmer_header.ejs")%>
+<script>
+        
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }  
+}
+var lati,longi;
+function showPosition(position) {
+    lati= position.coords.latitude ;
+  longi=  position.coords.longitude;
+    document.getElementById('lati').value=lati
+    document.getElementById('longi').value=longi
+}
+ 
+getLocation()
+</script>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-gray-800">Pre-cultivation support</h1>
+        <h2>Viewing details of <%=locals.crop %>
+        </h2>
+        <h3>Based on your location and our analysis, we present you the following Information about <%=locals.crop %>
+                cultivation.</h3>
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total area of land</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <%=locals.land%> hectare/s
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa fa-globefa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Yield prediction</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <%var yieldp=(locals.land*locals.yield); %>
+                                        <%=yieldp%> ton/s
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa fa-pagelines text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Minimum sale</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <%var totalmin=locals.rc(yieldp*(1000*locals.minprice))%>
+                                        <%=totalmin%> rupees
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa fa-globefa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Maximum sale</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <%var totalmax=locals.rc(yieldp*(1000*locals.maxprice))%>
+                                        <%=totalmax%> rupees
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa fa-globefa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q1" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Cultivation procedure</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q1">
+                <div class="card-body">
+                    <pre> <%=locals.q1%></pre>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q2" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Risk involved in cultivation</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q2">
+                <div class="card-body">
+                    <pre> <%=locals.q2%></pre>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q3" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Expenditure to cultivate</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q3">
+                <div class="card-body">
+                    <pre> <%=locals.q3%></pre>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q4" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Resources required to cultivate</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q4">
+                <div class="card-body">
+                    <pre> <%=locals.q4%></pre>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q5" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Future demand </h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q5">
+                <div class="card-body">
+                    <pre> <%=locals.q5%></pre>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card" style="width: 100%;">
+                <div class="row">
+                    <div class="col-6">
+                        <button class="btn btn-secondary" onclick="javascript:close_window();">I will check other
+                            crop.</button>
+                    </div>
+                    <div class="col-6">
+                        <form method="post" action="/registercrop">
+                            <input type="hidden" name="crop" value="<%=locals.crop%>" />
+                            <input type="hidden" name="yield" value="<%=locals.yield%>" />
+                            <input type="hidden" name="minprice" value="<%=locals.minprice%>" />
+                            <input type="hidden" name="maxprice" value="<%=locals.maxprice%>" />
+                            <input type="hidden" name="lati" id="lati" value="" />
+                            <input type="hidden" name="longi" id="longi" value="" />
+                            <button type="submit" class="btn btn-primary">I would like to cultivate this crop.</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include("farmer_footer.ejs")%>

@@ -1,0 +1,57 @@
+<script>
+    function getyieldpath(e){
+        console.log(URL.createObjectURL(e.files[0]));
+        document.getElementById("csvyieldset1").value=URL.createObjectURL(e.files[0])
+    }
+</script>
+<%- include("dmanager_header.ejs")%>
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Data Manager</h1>
+   
+   <h3>Use respective form below to update respective datasets in AutoML.</h3>
+   <center>
+    <div class="row">
+        <div class="col-auto">
+            <form method="post" id="check" action="http://127.0.0.1:5000/train-yield" enctype="multipart/form-data">
+                <label class="form-control" for="customFile">Paste path of CSV file to update yield prediction dataset.</label>
+                <!-- <input type="file" class="form-control" onchange="getyieldpath(this)" name="csvyieldset"
+                    id="csvyieldset" multiple accept="csv/*"> -->
+                    <input type="text" class="form-control"   name="filepath"
+                    id="csvyieldset1" multiple accept="csv/*">
+                <button type="submit" class="btn btn-primary">Update the dataset.</button>
+
+            </form>
+        </div>
+        <div class="col-auto">
+            <form method="post" id="check" action="http://127.0.0.1:5000/predict-minprice" enctype="multipart/form-data">
+                <label class="form-control" for="customFile">Paste path of CSV file to update min price prediction dataset.</label>
+                <!-- <input type="file" class="form-control" onchange="getyieldpath(this)" name="csvyieldset"
+                    id="csvyieldset" multiple accept="csv/*"> -->
+                    <input type="text" class="form-control"   name="filepath"
+                    id="csvyieldset1"  >
+                <button type="submit" class="btn btn-primary">Update the dataset.</button>
+
+            </form>
+        </div>
+        <div class="col-auto">
+            <form method="post" id="check" action="http://127.0.0.1:5000/predict-maxprice" enctype="multipart/form-data">
+                <label class="form-control" for="customFile">Paste path of CSV file to update max price prediction dataset.</label>
+                <!-- <input type="file" class="form-control" onchange="getyieldpath(this)" name="csvyieldset"
+                    id="csvyieldset" multiple accept="csv/*"> -->
+                    <input type="text" class="form-control"   name="filepath"
+                    id="csvyieldset1"  >
+                <button type="submit" class="btn btn-primary">Update the dataset.</button>
+
+            </form>
+        </div>
+    </div>
+</center>
+   </div>
+
+
+<%- include("dmanager_footer.ejs")%>
+
+

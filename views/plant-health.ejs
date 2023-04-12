@@ -1,0 +1,82 @@
+<%- include("farmer_header.ejs")%>
+    <script>
+        var base64img;
+        function encodeImageFileAsURL(element) {
+            var file = element.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function () {
+                base64img = reader.result;
+            }
+            reader.readAsDataURL(file);
+        }
+        $(document).ready(function () {
+         
+
+            $("#check").submit(function (e) {
+
+                e.preventDefault(); // avoid to execute the actual submit of the form.
+
+
+
+                $.ajax({
+                    type: "POST",
+                    url: '/checkplant',
+                    data: { img: base64img }, // serializes the form's elements.
+                    success: function (data) {
+                         console.log(data)
+                         if(data.isgood==false){
+                            $("#healthstatus").append("Not healthy")
+  
+                            $("#name").append(data.disease)
+                         }
+                         else
+                         $("#healthstatus").append("Healthy")
+                    }
+                });
+
+            });
+        })
+    </script>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-black-800">Cultivation support</h1>
+        <p>Upload image of plant leaf to detect the disease.</p>
+        <center>
+            <div class="row">
+                <div class="col">
+                    <form method="post" id="check" action="/checkplant">
+                        <label class="form-control" for="customFile">Upload a plant image</label>
+                        <input type="file" class="form-control" onchange="encodeImageFileAsURL(this)" name="img"
+                            id="img" multiple accept="image/*">
+                        <button type="submit" class="btn btn-primary">Check my plant</button>
+
+                    </form>
+                </div>
+            </div>
+        </center>
+        <br>
+        <div class="row">
+            <div class="col">
+                <div class="card ">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary" _msttexthash="302432" _msthash="68">Result</h6>
+                    </div>
+                    <div class="card-body" _msttexthash="21958742" _msthash="69">
+                        <p style="color:black">Is healthy?</p>
+                        <p id="healthstatus"></p>
+                        <p style="color:black">Disease Name</p>
+                        <p id="name"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include("farmer_footer.ejs")%>

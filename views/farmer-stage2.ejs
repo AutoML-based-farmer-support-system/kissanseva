@@ -1,0 +1,408 @@
+<%- include("farmer_header.ejs")%>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-gray-800">Cultivation support</h1>
+        <h2>Viewing details of <%=locals.crop %>
+        </h2>
+        <h3>Based on your location and our analysis, we present you the following Information about <%=locals.crop %>
+                cultivation.</h3>
+<div class="row  justify-content-center">
+    
+<center><p style="font-size: large;color: black; font-weight: bolder; text-align: center;">WEATHER</p></center>
+ 
+</div>
+<div class="row">
+    <% for(var k=0;k<=2;k++){%>
+            <div class="col-auto">
+      
+              <div class="card" style="color: #4B515D; border-radius: 35px;">
+                <div class="card-body p-5">
+      
+                  <div class="d-flex">
+                    <h6 class="flex-grow-1"><%=locals.place%>  </h6>
+                    <pre> <%=  locals.wd[k].dt%></pre>
+                  </div>
+      
+                  <div class="d-flex flex-column text-center mt-5 mb-4">
+                    <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;"> <%=  locals.wd[k].temp%>°C </h6>
+                    <span class="small" style="color: #868B94"> <%=  locals.wd[k].weather%></span>
+                  </div>
+      
+                  <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="font-size: 1rem;">
+                      <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1"> <%=  locals.wd[k].wind%> meter/sec
+                        </span></div>
+                      <div><i class="fa fa-cloud" aria-hidden="true"></i>
+                        <span class="ms-1">  <%=  locals.wd[k].cloud%>% </span>
+                      </div>
+                      <div><i class="fa fa-tint" aria-hidden="true"></i>
+                        <span class="ms-1">  <%=  locals.wd[k].humidity%>% </span>
+                      </div>
+                    </div>
+                    <div>
+                      <img src="https://openweathermap.org/img/wn/<%=  locals.wd[k].icon%>@2x.png"
+                        width="100px">
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+      
+            </div>
+
+            <%}%>
+ 
+</div>
+<br>
+<div class="row">
+    <% for(var k=3;k<=5;k++){%>
+            <div class="col-auto">
+      
+              <div class="card" style="color: #4B515D; border-radius: 35px;">
+                <div class="card-body p-5">
+      
+                  <div class="d-flex">
+                    <h6 class="flex-grow-1"><%=place%>  </h6>
+                    <pre> <%=  locals.wd[k].dt%></pre>
+                  </div>
+      
+                  <div class="d-flex flex-column text-center mt-5 mb-4">
+                    <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;"> <%=  locals.wd[k].temp%>°C </h6>
+                    <span class="small" style="color: #868B94"> <%=  locals.wd[k].weather%></span>
+                  </div>
+      
+                  <div class="d-flex align-items-center">
+                    <div class="flex-grow-1" style="font-size: 1rem;">
+                      <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1"> <%=  locals.wd[k].wind%> meter/sec
+                        </span></div>
+                      <div><i class="fa fa-cloud" aria-hidden="true"></i>
+                        <span class="ms-1">  <%=  locals.wd[k].cloud%>% </span>
+                      </div>
+                      <div><i class="fa fa-tint" aria-hidden="true"></i>
+                        <span class="ms-1">  <%=  locals.wd[k].humidity%>% </span>
+                      </div>
+                    </div>
+                    <div>
+                      <img src="https://openweathermap.org/img/wn/<%=  locals.wd[k].icon%>@2x.png"
+                        width="100px">
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+      
+            </div>
+
+            <%}%>
+ 
+</div>
+<br>
+<center><p style="font-size: large;color: black; font-weight: bolder; text-align: center;">Live IoT Data.</p></center>
+<br>
+<div class="row">
+            <div class="col-auto">
+              <div class="card" style="color: #4B515D; border-radius: 35px;">
+                <div class="card-body p-5">
+                  <div class="d-flex">
+                    <h6 class="flex-grow-1">Temperature   </h6>
+                    <img src="https://www.pngplay.com/wp-content/uploads/8/Temperature-Icon-Transparent-Background.png"
+                    width="50px" height="50px">
+                  </div>
+                  <div class="d-flex flex-column text-center mt-5 mb-4">
+                    <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2090673/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Temperature(°C)&type=line" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+
+                  </div>
+ 
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+                <div class="card" style="color: #4B515D; border-radius: 35px;">
+                  <div class="card-body p-5">
+                    <div class="d-flex">
+                      <h6 class="flex-grow-1">Humidity    </h6>
+                      <img src="https://cdn-icons-png.flaticon.com/512/219/219816.png"
+                      width="50px" height="50px">
+                      
+                    </div>
+                    <div class="d-flex flex-column text-center mt-5 mb-4">
+                        <iframe width="450" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2090673/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Humidity(Percentage)&type=line"></iframe>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="card" style="color: #4B515D; border-radius: 35px;">
+                  <div class="card-body p-5">
+                    <div class="d-flex">
+                      <h6 class="flex-grow-1">Air Quality   </h6>
+                      <img src="https://static.vecteezy.com/system/resources/thumbnails/009/375/126/small/smoke-concept-design-free-png.png"
+                      width="50px" height="50px">
+                    </div>
+                    <div class="d-flex flex-column text-center mt-5 mb-4">
+                        <iframe width="450" height="260" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2090673/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Air+quality(PPM)&type=line"></iframe>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>  
+              <div class="col-auto">
+                <div class="card" style="color: #4B515D; border-radius: 35px;">
+                  <div class="card-body p-5">
+                    <div class="d-flex">
+                      <h6 class="flex-grow-1">Soil Moisture </h6>
+                      <img src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/3231676/soil-temperature-icon-sm.png"
+                      width="50px" height="50px">
+                    </div>
+                    <div class="d-flex flex-column text-center mt-5 mb-4">
+                        <iframe width="450" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2090673/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Soil+Mositure(PERCENTAGE)&type=line"></iframe>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>    
+              <div class="col-auto">
+                <div class="card" style="color: #4B515D; border-radius: 35px;">
+                  <div class="card-body p-5">
+                    <div class="d-flex">
+                      <h6 class="flex-grow-1">Rain</h6>
+                      <img src="https://www.freepnglogos.com/uploads/rain-png/transparent-download-green-cloud-with-rain-clipart-png-23.png"
+                      width="50px" height="50px">
+                    </div>
+                    <div class="d-flex flex-column text-center mt-5 mb-4">
+                        <iframe width="450" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2090673/charts/5?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15&title=Yes/No"></iframe>
+                    </div>
+
+                  </div>
+                </div>
+              </div>                                                                       
+</div>
+<br>
+                <div class="row">
+
+    <div class="col-xl-3 col-md-6 mb-4">
+
+        <div class="card border-left-primary shadow h-100 py-2">
+            <a class="card-block stretched-link text-decoration-none" href="http://localhost:3000/" target="_blank">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                    </div>
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                           Online Shopping</div>
+                        <div class="h5 mb-0   text-gray-800">
+                             Shop for your agriculture needs.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+
+        <div class="card border-left-primary shadow h-100 py-2">
+            <a class="card-block stretched-link text-decoration-none" href="http://localhost:7854/" target="_blank">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                    </div>
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                           Kisan Connect</div>
+                        <div class="h5 mb-0   text-gray-800">
+                           Social media for farmers.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+
+        <div class="card border-left-primary shadow h-100 py-2">
+            <a class="card-block stretched-link text-decoration-none" href="/planthealth" >
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col-auto">
+                        <i class="fa fa-medkit" aria-hidden="true"></i>
+
+                    </div>
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                           Plant Problem prediction</div>
+                        <div class="h5 mb-0   text-gray-800">
+                          Upload your plant leaf image to find health issue.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total area of land</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <%=locals.land%> hectare/s
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa fa-globefa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Yield prediction</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <%var yieldp=(locals.land*locals.yield); %>
+                                        <%=yieldp%> ton/s
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa fa-pagelines text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Minimum sale</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <%var totalmin=locals.rc(yieldp*(1000*locals.minprice))%>
+                                        <%=totalmin%> rupees
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa fa-globefa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Maximum sale</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <%var totalmax=locals.rc(yieldp*(1000*locals.maxprice))%>
+                                        <%=totalmax%> rupees
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa fa-globefa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q1" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Cultivation procedure</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q1">
+                <div class="card-body">
+                    <pre> <%=locals.q1%></pre>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q2" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Risk involved in cultivation</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q2">
+                <div class="card-body">
+                    <pre> <%=locals.q2%></pre>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q3" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Expenditure to cultivate</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q3">
+                <div class="card-body">
+                    <pre> <%=locals.q3%></pre>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q4" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Resources required to cultivate</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q4">
+                <div class="card-body">
+                    <pre> <%=locals.q4%></pre>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#q5" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true"
+                aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Future demand </h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse hide" id="q5">
+                <div class="card-body">
+                    <pre> <%=locals.q5%></pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <%- include("farmer_footer.ejs")%>

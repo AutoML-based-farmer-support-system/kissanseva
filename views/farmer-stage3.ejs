@@ -1,0 +1,111 @@
+<%- include("farmer_header.ejs")%>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-gray-800">Post-cultivation support</h1>
+        <h2>Welcome, <%=locals.name %>
+        </h2>
+        <h3>Congratulations! It's time to sell your production.</h3>
+        <p>Please click on create new order to create a sell order.</p><br>
+        <a href="/sellorder"> <button class="btn btn-primary">Create a sell order</button></a>
+        <br>
+        <br>
+        <table class="table" id="crops">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Address</th>
+                    <th>Commodity</th>
+                    <th>Quantity(TON)</th>
+                    <th>Finalprice(INR)</th>
+                    <th>Status</th>
+                    <th>Reserved by</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </div>
+    <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                'url': "/myorders",
+                'method': "GET",
+                'contentType': 'application/json'
+            }).done(function (data) {
+
+                $('#crops').DataTable({
+
+                    paging: true,
+                    "autoWidth": true,
+                    "searching": true,
+                    "aaData": data,
+                    "columns": [
+                        {
+                            "data": "orderid"
+                        },
+                        {
+                            "data": "address"
+                        },
+                        {
+                            "data": "commodity"
+                        },
+                        {
+                            "data": "quantity"
+                        },
+
+                        {
+                            "data": "finalprice"
+                        },
+                        {
+                            "data": "status"
+                        },
+
+
+                        {
+                            "data": "reservedby",
+                            render: (data) => { return '<form id="cinfo"  name="vd" method="post" action="/viewcompany"><input type="hidden" name="company" value="' + data + '"/> <button type="submit" class="btn btn-primary" target="_blank">' +'Click here to view company details' + '</button></form>' }
+                        }
+                    ]
+
+
+                });
+            })
+        })
+
+
+    </script>
+    <script>
+        $(function() { 
+            $(document).on('submit', "#cinfo", function(e) {
+                e.preventDefault();
+    
+                $.ajax({  
+                    url: "/viewcinfo",
+                    type: "post",  
+                    data: $(this).serialize(),
+                    error:function(){
+                        alert("ERROR : CANNOT CONNECT TO SERVER");
+                    },
+                    success: function(data) {
+                        Swal.fire({
+title: data.name,
+text: data.about,
+icon: 'info',
+confirmButtonText: 'OK'
+})
+                    }
+                });
+                return false; 
+            });
+        });
+    </script>
+    <%- include("farmer_footer.ejs")%>

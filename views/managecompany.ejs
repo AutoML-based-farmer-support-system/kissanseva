@@ -1,0 +1,92 @@
+<%- include("mkmanager_header.ejs")%>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Manage companies</h1>
+                   <h2>Welcome, </h2>
+               <br>
+                    <table class="table" id="crops">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>GSTN</th>
+                            <th>About</th>
+                            <th>DOI</th>
+                            <th>Commondity list</th>
+                            <th>Action</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                      </table>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            <script>
+              $(document).ready(function(){
+
+                $.ajax({
+    'url': "/getcompanies",
+    'method': "GET",
+    'contentType': 'application/json'
+}).done( function(data) {
+    
+      $('#crops').DataTable({
+                   
+                   paging: true,
+                   "autoWidth": true,
+           "searching":true,
+           "aaData": data,
+                   "columns":[
+                       {
+                           "data":"name"
+                       },
+                       {
+                           "data":"email"
+                       },
+                       {
+                           "data":"gstn"
+                       },
+    
+                       {
+                           "data":"about"
+                       },
+                       {
+                           "data":"doi"
+                       },
+    
+    
+                       {
+                           "data":"cset"
+                         
+                       }
+                       ,
+                       {
+                        "data":"name",
+                        render:(data)=>{
+                            // if(data=="pending")
+                            return '<form    name="vd" method="post" action="/approve"><input type="hidden" name="company" value="'+data+'"/> <button type="submit" class="btn btn-primary" target="_blank"  >Approve</button></form><br>  <form    name="vd" method="post" action="/reject"><input type="hidden" name="company" value="'+data+'"/> <button type="submit" class="btn btn-danger" target="_blank">Reject</button></form>'
+                            // else
+                            // return 'Not Applicable'
+                    }
+                       },
+                       {
+                        "data":"status"
+                       }
+                   ]
+                  
+              
+                });
+    })
+})
+              
+         
+              </script>
+            <%- include("mkmanager_footer.ejs")%>

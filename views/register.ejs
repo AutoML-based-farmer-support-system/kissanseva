@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <title>Kisan Seva - Register</title>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+            var $googleDiv = $("#google_translate_element .skiptranslate");
+            var $googleDivChild = $("#google_translate_element .skiptranslate div");
+            $googleDivChild.next().remove();
+
+            $googleDiv.contents().filter(function () {
+                return this.nodeType === 3 && $.trim(this.nodeValue) !== '';
+            }).remove();
+            $(document).ready(function () {
+                // Disable the second dropdown by default
+                $('#district').prop('disabled', true);
+                $('#market').prop('disabled', true);
+                $('#state').change(function () {
+                    // Get the selected value
+                    var selectedState = $(this).val();
+                    console.log("sate selected is" + selectedState)
+                    $.get('/getdistricts?state=' + selectedState, function (data) {
+
+                        console.log(data);
+                        $('#district').prop('disabled', false);
+                        var $el = $("#district");
+                        $el.empty()
+                        $.each(data, function (key, value) {
+                            $el.append($("<option></option>")
+                                .attr("value", value.district).text(value.district));
+                        }
+                        );
+                        $('#district').change(function () {
+                            var selectedDistrict = $(this).val();
+                            console.log("selectedDistrict is" + selectedDistrict)
+                            $.get('/getmarkets?district=' + selectedDistrict, function (data) {
+
+                                console.log(data);
+                                $('#market').prop('disabled', false);
+                                var $el = $("#market");
+                                $el.empty()
+                                $.each(data, function (key, value) {
+                                    $el.append($("<option></option>")
+                                        .attr("value", value.market).text(value.market));
+                                }
+                                );
+
+                            })
+                        })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                // Handle any errors that occurred during the request
+                                console.error('Error:', textStatus, errorThrown);
+                            });
+                    })
+
+                })
+            })
+        }
+    </script>
+    <script>
+        function validateRegister(e) {
+            // e.preventDefault();
+            const formData = new FormData(e.target);
+            const formProps = Object.fromEntries(formData);
+            console.log(formProps)
+            if (formProps.aadhar.length != 12) {
+                Swal.fire({
+                    title: 'Invalid AAdhar!',
+                    text: 'AAdhar number length should be 12 digits.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+                return false;
+            }
+            else if (formProps.password != formProps.rpassword) {
+                Swal.fire({
+                    title: 'Passwords mismatch!',
+                    text: 'Password and repeat password should be same.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+                return false
+            }
+            else if (formProps.mobile.length != 10) {
+                Swal.fire({
+                    title: 'Incorrect mobile number!',
+                    text: 'Please enter mobile number of 10 digits.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+                return false
+            }
+            return true;
+        }
+    </script>
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <div id="google_translate_element"></div>
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+                            <form class="register" name="register" method="post" action="/registerfarmer"
+                                onSubmit="return validateRegister(event)">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" id="FirstName"
+                                            name="first_name" placeholder="First Name" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                            name="last_name" placeholder="Last Name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                        name="email" placeholder="Email Address" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" class="form-control form-control-user" id="exampleInputEmail"
+                                        name="aadhar" placeholder="AAdhar number" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" class="form-control form-control-user" id="exampleInputEmail"
+                                        name="mobile" placeholder="Mobile number" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" step="any" class="form-control form-control-user"
+                                        id="exampleInputEmail" name="land" placeholder="Land in hectare " required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="first-dropdown">Date of birth</label>
+                                    <input type="date" class="form-control form-control-user" id="exampleInputEmail"
+                                        name="dob" placeholder="Date of birth" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="first-dropdown">State</label>
+                                    <select id="state" name="state" class="form-control">
+                                        <option value="">Select your state</option>
+                                        <% states.forEach(function(state) { %>
+                                            <option value="<%= state.state %>">
+                                                <%= state.state %>
+                                            </option>
+                                            <% }); %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="first-dropdown">District</label>
+                                    <select id="district" name="district" class="form-control">
+                                        <option value="">Select your district</option>
+
+                                        <option value=" "> </option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="first-dropdown">Market</label>
+                                    <select id="market" name="market" class="form-control">
+                                        <option value="">Select your market</option>
+
+                                        <option value=" "> </option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user" name="password"
+                                            id="exampleInputPassword" placeholder="Password" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user" name="rpassword"
+                                            id="exampleRepeatPassword" placeholder="Repeat Password" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Register Account
+                                </button>
+                                <hr>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="/forgot-password">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="/">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>

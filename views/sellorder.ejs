@@ -1,0 +1,31 @@
+<%- include("farmer_header.ejs")%>
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Welcome</h1>
+   
+   <h3>Enter correct details for sell order</h3>
+   <center>
+    <div class="row">
+        <div class="col">
+            <form method="post" id="check" action="/sellorder" >
+
+                <label class="form-control" for="customFile">Pickup Address with mobile number</label>
+ 
+                    <textarea type="text" class="form-control"   name="address" required></textarea><br>
+                    <label class="form-control" for="customFile">Quantity in tons</label>
+ 
+                    <input type="number" class="form-control"   name="qa" required
+                    /><br>
+                <button type="submit" class="btn btn-primary">Place sell order</button>
+
+            </form>
+        </div>
+ 
+    </div>
+</center>
+   </div>
+
+
+<%- include("farmer_footer.ejs")%>
